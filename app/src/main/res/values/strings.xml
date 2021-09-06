@@ -14,4 +14,11 @@
     <string name="notif_big_inbox_title">Mensagens não lidas</string>
     <string name="notif_big_inbox_message">Mensagem %1$d</string>
     <string name="notif_big_inbox_summary">Clique para exibir</string>
+    <string name="btn_simple_label">Simples</string>
+    <string name="btn_tp_action_label">Tap Action</string>
+    <string name="btn_big_text_label">Big Text</string>
+    <string name="btn_action_button_label">Button Action</string>
+    <string name="btn_direct_reply_label">Direct Reply</string>
+    <string name="btn_inbox_label">Inbox</string>
+    <string name="btn_heads_up_label">Heads Up</string>
 </resources>
