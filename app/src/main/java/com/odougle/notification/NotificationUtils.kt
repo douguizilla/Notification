@@ -26,4 +26,35 @@ object NotificationUtils {
         }
         notificationManager.createNotificationChannel(channel)
     }
+
+    fun notificationSimple(mainActivity: MainActivity) {
+        TODO("Not yet implemented")
+    }
+
+    fun notificationWithTapAction(mainActivity: MainActivity) {
+        TODO("Not yet implemented")
+    }
+
+    fun notificationBigText(context: Context) {
+        TODO("Not yet implemented")
+    }
+
+    fun notificationWithButtonAction(mainActivity: MainActivity) {
+
+
+    }
+
+    fun notificationAutoReply(mainActivity: MainActivity) {
+        TODO("Not yet implemented")
+    }
+
+    fun notificationInbox(mainActivity: MainActivity) {
+        TODO("Not yet implemented")
+    }
+
+    fun notificationHeadsUp(mainActivity: MainActivity) {
+        TODO("Not yet implemented")
+    }
+
+
 }
