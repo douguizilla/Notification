@@ -13,5 +13,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        binding.btnSimple.setOnClickListener {
+
+        }
+
+        binding.btnTapAction.setOnClickListener {
+
+        }
+
+        binding.btnBigText.setOnClickListener {
+
+        }
+
+        binding.btnActionButton.setOnClickListener {
+
+        }
+
+        binding.btnDirectReply.setOnClickListener {
+
+        }
+
+        binding.btnInbox.setOnClickListener {
+
+        }
+
+        binding.btnHeadsUp.setOnClickListener {
+
+        }
+
+
     }
 }
