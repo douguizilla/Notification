@@ -50,6 +50,21 @@ object NotificationUtils {
     }
 
     fun notificationWithTapAction(context: Context) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            createNotificationChannel(context)
+        }
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_favorite)
+            .setContentTitle(context.getString(R.string.notif_title))
+            .setContentText(context.getString(R.string.notif_text))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setColor(ActivityCompat.getColor(context, R.color.design_default_color_on_primary))
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setContentIntent(getContentIntent(context))
+            .setAutoCancel(true)
+
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(2, notificationBuilder.build())
     }
 
     fun notificationBigText(context: Context) {
@@ -73,6 +88,7 @@ object NotificationUtils {
         }
         return PendingIntent.getActivity(context, 0, intent, 0)
     }
+
 
 
 }
