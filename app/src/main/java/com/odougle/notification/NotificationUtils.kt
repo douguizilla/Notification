@@ -1,9 +1,6 @@
 package com.odougle.notification
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -83,10 +80,13 @@ object NotificationUtils {
     }
 
     private fun getContentIntent(context: Context): PendingIntent? {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        val detailsIntent = Intent(context, DetailsActivity::class.java).apply {
+            putExtra(DetailsActivity.EXTRA_MESSAGE, "Via notificação")
+
         }
-        return PendingIntent.getActivity(context, 0, intent, 0)
+        return TaskStackBuilder.create(context)
+            .addNextIntentWithParentStack(detailsIntent)
+            .getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
 

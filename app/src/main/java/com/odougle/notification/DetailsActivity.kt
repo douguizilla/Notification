@@ -14,5 +14,10 @@ class DetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.txtMessage.text = intent.getStringExtra(EXTRA_MESSAGE)
+    }
+
+    companion object{
+        const val EXTRA_MESSAGE = "message"
     }
 }
