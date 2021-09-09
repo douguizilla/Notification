@@ -1,4 +1,4 @@
-package com.odougle.notification
+package com.odougle.notification.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context

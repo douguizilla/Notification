@@ -1,9 +1,8 @@
-package com.odougle.notification
+package com.odougle.notification.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.odougle.notification.databinding.ActivityDetailsBinding
-import com.odougle.notification.databinding.ActivityMainBinding
 
 class DetailsActivity : AppCompatActivity() {
 

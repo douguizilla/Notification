@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Notification">
-        <receiver android:name=".NotificationActionReceiver"/>
-        <activity android:name=".DetailsActivity"
-            android:parentActivityName=".MainActivity"/>
+        <receiver android:name=".receivers.NotificationActionReceiver"/>
+        <activity android:name=".activities.DetailsActivity"
+            android:parentActivityName=".activities.MainActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

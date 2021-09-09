@@ -9,6 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.odougle.notification.activities.DetailsActivity
+import com.odougle.notification.receivers.NotificationActionReceiver
 
 object NotificationUtils {
     val CHANNEL_ID = "default"
