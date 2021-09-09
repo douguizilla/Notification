@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.os.Handler
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -157,7 +158,25 @@ object NotificationUtils {
     }
 
     fun notificationReplied(context: Context, notificationId: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(context)
+        }
+        val timeout = 2000L
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_favorite)
+            .setContentTitle(context.getString(R.string.notif_title))
+            .setContentText(context.getString(R.string.notif_reply_replied))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setColor(ActivityCompat.getColor(context, R.color.design_default_color_on_primary))
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setDefaults(0)
+            .setTimeoutAfter(timeout)
 
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(notificationId, notificationBuilder.build())
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            Handler().postDelayed({notificationManager.cancel(notificationId)}, timeout)
+        }
     }
 
     fun notificationInbox(context: Context) {
