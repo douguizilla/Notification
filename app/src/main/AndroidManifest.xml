@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Notification">
         <receiver android:name=".receivers.NotificationActionReceiver"/>
+        <receiver android:name=".receivers.ReplyReceiver"/>
         <activity android:name=".activities.DetailsActivity"
             android:parentActivityName=".activities.MainActivity"/>
         <activity
