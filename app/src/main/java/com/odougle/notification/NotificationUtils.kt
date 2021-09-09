@@ -9,31 +9,36 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.RemoteInput
 import com.odougle.notification.activities.DetailsActivity
 import com.odougle.notification.receivers.NotificationActionReceiver
+import com.odougle.notification.receivers.ReplyReceiver
 
 object NotificationUtils {
     val CHANNEL_ID = "default"
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(context: Context){
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private fun createNotificationChannel(context: Context) {
+        val notificationManager =
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelName = context.getString(R.string.notif_channel_name)
         val channelDescription = context.getString(R.string.notif_channel_description)
-        val channel = NotificationChannel(CHANNEL_ID,
-        channelName,
-        NotificationManager.IMPORTANCE_DEFAULT).apply {
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            channelName,
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
             description = channelDescription
             enableLights(true)
             lightColor = Color.GREEN
             enableVibration(true)
-            vibrationPattern = longArrayOf(100,200,300,400,500,400,300,200,100)
+            vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 100)
         }
         notificationManager.createNotificationChannel(channel)
     }
 
     fun notificationSimple(context: Context) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(context)
         }
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -49,7 +54,7 @@ object NotificationUtils {
     }
 
     fun notificationWithTapAction(context: Context) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(context)
         }
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -67,7 +72,7 @@ object NotificationUtils {
     }
 
     fun notificationBigText(context: Context) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(context)
         }
 
@@ -90,7 +95,7 @@ object NotificationUtils {
     }
 
     fun notificationWithButtonAction(context: Context) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(context)
         }
         val actionIntent = Intent(context, NotificationActionReceiver::class.java).apply {
@@ -112,6 +117,47 @@ object NotificationUtils {
     }
 
     fun notificationAutoReply(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(context)
+        }
+        val notificationId = 5
+        val intent = Intent(context, ReplyReceiver::class.java).apply {
+            putExtra(ReplyReceiver.EXTRA_NOTIFICATION_ID, notificationId)
+        }
+
+        val replyPendingIntent = PendingIntent.getBroadcast(
+            context,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val remoteInput = RemoteInput.Builder(ReplyReceiver.EXTRA_TEXT_REPLY)
+            .setLabel(context.getString(R.string.notif_reply_hint))
+            .build()
+
+        val action = NotificationCompat.Action.Builder(
+            R.drawable.ic_send,
+            context.getString(R.string.notif_reply_label),
+            replyPendingIntent)
+            .addRemoteInput(remoteInput)
+            .build()
+
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_favorite)
+            .setContentTitle(context.getString(R.string.notif_title))
+            .setContentText(context.getString(R.string.notif_text))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setColor(ActivityCompat.getColor(context, R.color.design_default_color_on_primary))
+            .setDefaults(Notification.DEFAULT_ALL)
+            .addAction(action)
+
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(notificationId, notificationBuilder.build())
+    }
+
+    fun notificationReplied(context: Context, notificationId: Int) {
+
     }
 
     fun notificationInbox(context: Context) {
@@ -129,7 +175,4 @@ object NotificationUtils {
             .addNextIntentWithParentStack(detailsIntent)
             .getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT)
     }
-
-
-
 }
