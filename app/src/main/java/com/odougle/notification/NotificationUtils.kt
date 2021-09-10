@@ -180,6 +180,28 @@ object NotificationUtils {
     }
 
     fun notificationInbox(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(context)
+        }
+        val number = 5
+        val inboxStyle = NotificationCompat.InboxStyle()
+        inboxStyle.setBigContentTitle(context.getString(R.string.notif_big_inbox_title))
+        for (i in 1..number){
+            inboxStyle.addLine(context.getString(R.string.notif_big_inbox_message, i))
+        }
+        inboxStyle.setSummaryText(context.getString(R.string.notif_big_inbox_summary))
+
+        val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_favorite)
+            .setContentTitle(context.getString(R.string.notif_title))
+            .setContentText(context.getString(R.string.notif_text))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setColor(ActivityCompat.getColor(context, R.color.design_default_color_on_primary))
+            .setDefaults(Notification.DEFAULT_ALL)
+            .setStyle(inboxStyle)
+
+        val nm = NotificationManagerCompat.from(context)
+        nm.notify(8, notificationBuilder.build())
     }
 
     fun notificationHeadsUp(context: Context) {
