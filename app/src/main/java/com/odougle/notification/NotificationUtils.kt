@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.RemoteInput
 import com.odougle.notification.activities.DetailsActivity
+import com.odougle.notification.receivers.DeleteNotificationsReceiver
 import com.odougle.notification.receivers.NotificationActionReceiver
 import com.odougle.notification.receivers.ReplyReceiver
 
@@ -42,6 +43,10 @@ object NotificationUtils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel(context)
         }
+        val deletePit = PendingIntent.getBroadcast(
+            context, 0,
+            Intent(context, DeleteNotificationsReceiver::class.java), 0)
+
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_favorite)
             .setContentTitle(context.getString(R.string.notif_title))
@@ -49,6 +54,7 @@ object NotificationUtils {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setColor(ActivityCompat.getColor(context, R.color.design_default_color_on_primary))
             .setDefaults(Notification.DEFAULT_ALL)
+            .setDeleteIntent(deletePit)
 
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(1, notificationBuilder.build())
