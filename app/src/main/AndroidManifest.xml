@@ -11,6 +11,7 @@
         android:theme="@style/Theme.Notification">
         <receiver android:name=".receivers.NotificationActionReceiver"/>
         <receiver android:name=".receivers.ReplyReceiver"/>
+        <receiver android:name=".receivers.DeleteNotificationsReceiver"/>
         <activity android:name=".activities.DetailsActivity"
             android:parentActivityName=".activities.MainActivity"/>
         <activity
