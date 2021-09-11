@@ -18,6 +18,7 @@ import com.odougle.notification.receivers.ReplyReceiver
 
 object NotificationUtils {
     val CHANNEL_ID = "default"
+    val URGENT_ID = "urgent"
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(context: Context) {
@@ -36,6 +37,17 @@ object NotificationUtils {
             enableVibration(true)
             vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 100)
         }
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationUrgentChannel(context: Context){
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channel = NotificationChannel(
+            URGENT_ID,
+            context.getString(R.string.notif_channel_urgent_name),
+            NotificationManager.IMPORTANCE_HIGH
+        )
         notificationManager.createNotificationChannel(channel)
     }
 
